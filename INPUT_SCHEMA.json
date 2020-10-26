@@ -35,8 +35,8 @@
         }
     },
     "required": [
-        "base",
-        "other",
+        "baseDatasetId",
+        "otherDatasetId",
         "uniqueFields"
     ]
 }
