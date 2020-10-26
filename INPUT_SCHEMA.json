@@ -1,0 +1,42 @@
+{
+    "title": "Diff datasets",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "baseDatasetId": {
+            "title": "Base dataset",
+            "type": "string",
+            "description": "This dataset ID that will serve as base and collect the unique items.",
+            "editor": "textfield"
+        },
+        "otherDatasetId": {
+            "title": "Other dataset",
+            "type": "string",
+            "description": "Only non-existing items from base will be ouput using this other dataset",
+            "editor": "textfield"
+        },
+        "uniqueFields": {
+            "title": "Test",
+            "type": "array",
+            "default": [],
+            "example": [
+                "id",
+                "size"
+            ],
+            "description": "Unique fields to create a compound key. For example, an unique ID field might not be unique, so you place two fields that make the item itself unique",
+            "editor": "stringList"
+        },
+        "maxBufferSize": {
+            "title": "Max Buffer size",
+            "type": "integer",
+            "description": "How many items to buffer in memory before outputting it",
+            "editor": "number",
+            "default": 20000
+        }
+    },
+    "required": [
+        "base",
+        "other",
+        "uniqueFields"
+    ]
+}
