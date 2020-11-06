@@ -16,7 +16,7 @@
             "editor": "textfield"
         },
         "uniqueFields": {
-            "title": "Test",
+            "title": "Data fields",
             "type": "array",
             "default": [],
             "example": [

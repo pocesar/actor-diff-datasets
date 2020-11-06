@@ -1,4 +1,5 @@
 const Apify = require('apify');
+const { XXHash64 } = require('xxhash-addon');
 const { bufferDataset } = require('./functions');
 
 const { log } = Apify.utils;
@@ -11,7 +12,14 @@ Apify.main(async () => {
     }
 
     const ds = bufferDataset(await Apify.openDataset(), { maxBufferSize });
-    const compoundKey = (item) => uniqueFields.reduce((out, field) => (`${out}${item[field]}`), '');
+    const hasher = new XXHash64();
+    const compoundKey = (item) => {
+        let value = '';
+        for (const field of uniqueFields) {
+            value = `${value}${typeof item[field] !== 'object' ? item[field] : JSON.stringify(item[field])}`;
+        }
+        return hasher.hash(Buffer.from(value)).toString('hex');
+    };
 
     const baseDataset = await Apify.openDataset(baseDatasetId, { forceCloud: true });
     const otherDataset = await Apify.openDataset(otherDatasetId, { forceCloud: true });
