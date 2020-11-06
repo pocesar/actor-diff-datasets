@@ -15,11 +15,9 @@ FROM apify/actor-node-basic
 # that affect NPM install in the next step
 COPY package*.json ./
 
-RUN buildDeps='g++ make python' \
- && apt-get update \
- && apt-get install -y --no-install-recommends $buildDeps \
- && apt-get remove -y --purge --auto-remove $buildDeps \
- && rm -rf /var/lib/apt/lists/* /tmp/* /root/.node-gyp /usr/local/lib/node_modules/npm/node_modules/node-gyp
+RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache python make g++
+RUN npm i node-gyp -g
 
 # Install NPM packages, skip optional and development dependencies to keep the
 # image small. Avoid logging too much and print the dependency tree for debugging
