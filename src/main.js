@@ -1,6 +1,7 @@
 const Apify = require('apify');
 const { XXHash64 } = require('xxhash-addon');
 const { bufferDataset } = require('./functions');
+const get = require('lodash.get');
 
 const { log } = Apify.utils;
 
@@ -16,7 +17,12 @@ Apify.main(async () => {
     const compoundKey = (item) => {
         let value = '';
         for (const field of uniqueFields) {
-            value = `${value}${typeof item[field] !== 'object' ? item[field] : JSON.stringify(item[field])}`;
+            const pathValue = get(item, field);
+            // eslint-disable-next-line no-nested-ternary
+            value = `${value}${pathValue !== undefined
+                ? typeof pathValue !== 'object' ? pathValue : JSON.stringify(pathValue)
+                : ''
+            }`;
         }
         return hasher.hash(Buffer.from(value)).toString('hex');
     };

@@ -21,7 +21,10 @@
             "default": [],
             "example": [
                 "id",
-                "size"
+                "size",
+                "array.0",
+                "array.length",
+                "string.length"
             ],
             "description": "Unique fields to create a compound key. For example, an unique ID field might not be unique, so you place two fields that make the item itself unique",
             "editor": "stringList"
